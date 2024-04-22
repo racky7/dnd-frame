@@ -10,24 +10,22 @@ type DroppableElementProps = {
 }
 
 export default function DroppableElement({ item, className, style }: DroppableElementProps) {
-  const { droppableId, setDroppableId } = useDndContext()
+  const { droppableId } = useDndContext()
+
+  const isOver = droppableId === item.id
 
   return (
     <div
       className={cn(
-        'rounded-md border border-dashed p-2 text-center text-xs text-muted-foreground',
-        droppableId === item.id ? 'bg-primary text-primary-foreground' : undefined,
+        isOver
+          ? 'h-auto rounded-md border border-dashed bg-primary p-2 text-center text-xs text-primary-foreground'
+          : 'h-0',
         className,
       )}
+      data-droppable-id={item.id}
       style={style}
-      onDragEnter={() => {
-        setDroppableId(item.id)
-      }}
-      onDragLeave={() => {
-        setDroppableId(undefined)
-      }}
     >
-      Drop element to add
+      {isOver ? 'Drop here' : null}
     </div>
   )
 }

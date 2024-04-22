@@ -10,11 +10,12 @@ type DraggableElementProps = {
 }
 
 export default function DraggableElement({ item, className, style }: DraggableElementProps) {
-  const { setDraggableId } = useDndContext()
+  const { handleDrag: setDraggableId } = useDndContext()
 
   return (
     <div
       className={cn('flex aspect-square items-center justify-center rounded-md border bg-background', className)}
+      data-draggable-id={item.id}
       style={style}
       draggable
       onDragStart={() => {

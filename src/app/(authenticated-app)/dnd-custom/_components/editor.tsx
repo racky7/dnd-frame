@@ -31,16 +31,16 @@ export default function Editor() {
             ))}
           </div>
         </div>
-        <div className="flex-1 overflow-auto">
-          <FrameComponent
+        <div className="flex-1 overflow-auto" id="canvas-container">
+          {/* <FrameComponent
             className="h-full w-full"
             initialContent={`<!DOCTYPE html><html class="${GeistMono.variable} ${GeistSans.variable}"><head>${injectStyles}</head><body><div></div></body></html>`}
           >
-            <div className="space-y-2 p-2">
+            <div className="">
               <DroppableElement item={{ id: 'droppable-0' }} />
               <DroppableElement item={{ id: 'droppable-1' }} />
             </div>
-          </FrameComponent>
+          </FrameComponent> */}
         </div>
       </div>
     </DndContextProvider>
