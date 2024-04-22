@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { useDndContext } from '../_context/dnd-context'
 
 type DroppableElementProps = {
   item: { id: string } & Record<string, unknown>
@@ -9,15 +10,21 @@ type DroppableElementProps = {
 }
 
 export default function DroppableElement({ item, className, style }: DroppableElementProps) {
+  const { droppableId, setDroppableId } = useDndContext()
+
   return (
     <div
-      className={cn('rounded-md border border-dashed p-2 text-center text-xs text-muted-foreground', className)}
+      className={cn(
+        'rounded-md border border-dashed p-2 text-center text-xs text-muted-foreground',
+        droppableId === item.id ? 'bg-primary text-primary-foreground' : undefined,
+        className,
+      )}
       style={style}
       onDragEnter={() => {
-        console.log('entering', item.id)
+        setDroppableId(item.id)
       }}
       onDragLeave={() => {
-        console.log('leaving', item.id)
+        setDroppableId(undefined)
       }}
     >
       Drop element to add

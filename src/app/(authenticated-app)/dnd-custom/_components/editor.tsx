@@ -6,6 +6,7 @@ import { GeistMono } from 'geist/font/mono'
 import DraggableElement from './draggable-element'
 import DroppableElement from './droppable-element'
 import { useInjectStyles } from '@/hooks/use-inject-styles'
+import { DndContextProvider } from '../_context/dnd-context'
 
 /**
  * 1. Draggable
@@ -21,25 +22,27 @@ export default function Editor() {
   const injectStyles = useInjectStyles()
 
   return (
-    <div className="flex h-screen divide-x overflow-hidden">
-      <div className="w-[320px] overflow-auto">
-        <div className="grid grid-flow-row-dense grid-cols-2 items-center gap-4 p-4">
-          {ITEMS.map((item) => (
-            <DraggableElement key={item.id} item={item} />
-          ))}
+    <DndContextProvider>
+      <div className="flex h-screen divide-x overflow-hidden">
+        <div className="w-[320px] overflow-auto">
+          <div className="grid grid-flow-row-dense grid-cols-2 items-center gap-4 p-4">
+            {ITEMS.map((item) => (
+              <DraggableElement key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+        <div className="flex-1 overflow-auto">
+          <FrameComponent
+            className="h-full w-full"
+            initialContent={`<!DOCTYPE html><html class="${GeistMono.variable} ${GeistSans.variable}"><head>${injectStyles}</head><body><div></div></body></html>`}
+          >
+            <div className="space-y-2 p-2">
+              <DroppableElement item={{ id: 'droppable-0' }} />
+              <DroppableElement item={{ id: 'droppable-1' }} />
+            </div>
+          </FrameComponent>
         </div>
       </div>
-      <div className="flex-1 overflow-auto">
-        <FrameComponent
-          className="h-full w-full"
-          initialContent={`<!DOCTYPE html><html class="${GeistMono.variable} ${GeistSans.variable}"><head>${injectStyles}</head><body><div></div></body></html>`}
-        >
-          <div className="space-y-2 p-2">
-            <DroppableElement item={{ id: 'droppable-0' }} />
-            <DroppableElement item={{ id: 'droppable-1' }} />
-          </div>
-        </FrameComponent>
-      </div>
-    </div>
+    </DndContextProvider>
   )
 }
