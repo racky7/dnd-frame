@@ -8,6 +8,9 @@ dependencies:
   '@auth/prisma-adapter':
     specifier: 1.1.0
     version: 1.1.0(@prisma/client@5.3.1)
+  '@dnd-kit/core':
+    specifier: ^6.1.0
+    version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
   '@prisma/client':
     specifier: ^5.3.1
     version: 5.3.1(prisma@5.3.1)
@@ -86,6 +89,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-frame-component:
+    specifier: ^5.2.6
+    version: 5.2.6(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   superjson:
     specifier: ^1.13.1
     version: 1.13.1
@@ -208,6 +214,37 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
+    dev: false
+
+  /@dnd-kit/accessibility@3.1.0(react@18.2.0):
+    resolution: {integrity: sha512-ea7IkhKvlJUv9iSHJOnxinBcoOI3ppGnnL+VDJ75O45Nss6HtZd8IdN8touXPDtASfeI2T2LImb8VOZcL47wjQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/core@6.1.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-J3cQBClB4TVxwGo3KEjssGEXNJqGVWx17aRTZ1ob0FliR5IjYgTxl5YJbKTzA6IzrtelotH19v6y7uoIRUZPSg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@dnd-kit/accessibility': 3.1.0(react@18.2.0)
+      '@dnd-kit/utilities': 3.2.2(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/utilities@3.2.2(react@18.2.0):
+    resolution: {integrity: sha512-+MKAJEOfaBe5SmV6t34p80MMKhjvUz0vRrvVJbPT0WElzaOJ/1xs+D+KDv+tD/NE5ujfrChEcshd4fLn0wpiqg==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      tslib: 2.6.2
     dev: false
 
   /@emotion/is-prop-valid@0.8.8:
@@ -3176,7 +3213,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /punycode@2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
@@ -3196,9 +3232,20 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-frame-component@5.2.6(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-CwkEM5VSt6nFwZ1Op8hi3JB5rPseZlmnp5CGiismVTauE6S4Jsc4TNMlT0O7Cts4WgIC3ZBAQ2p1Mm9XgLbj+w==}
+    peerDependencies:
+      prop-types: ^15.5.9
+      react: '>= 16.3'
+      react-dom: '>= 16.3'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: true
 
   /react-remove-scroll-bar@2.3.4(@types/react@18.2.21)(react@18.2.0):
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}

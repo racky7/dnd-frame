@@ -1,7 +1,12 @@
+'use client'
+
+import Frame from 'react-frame-component'
+import ItemDroppable from './_components/item-droppable'
+
 export default function Page() {
   return (
-    <div className="p-4">
-      <div className="text-3xl font-semibold">Home Page</div>
-    </div>
+    <Frame>
+      <ItemDroppable className="h-[500px] w-full border" />
+    </Frame>
   )
 }

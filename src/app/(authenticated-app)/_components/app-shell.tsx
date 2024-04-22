@@ -1,35 +1,9 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
-import {
-  CalendarIcon,
-  FilesIcon,
-  FolderIcon,
-  HomeIcon,
-  PieChartIcon,
-  SearchIcon,
-  UserIcon,
-  UsersIcon,
-} from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import dynamic from 'next/dynamic'
-import { Button } from '@/components/ui/button'
+import { DndContext, DragEndEvent } from '@dnd-kit/core'
 import { cn } from '@/lib/utils'
-import Spinner from '@/components/ui/spinner'
-import NavLink from './nav-link'
-import AccountMenu from './account-menu'
-import NotificationsMenu from './nofitications-menu'
-
-const ThemeToggle = dynamic(() => import('./theme-toggle'), {
-  ssr: false,
-  loading: () => {
-    return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-md border">
-        <Spinner />
-      </div>
-    )
-  },
-})
+import ItemCard from './item-card'
+import ItemDragOverlay from './item-drag-overlay'
 
 type AppShellProps = {
   children: React.ReactNode
@@ -37,62 +11,35 @@ type AppShellProps = {
   style?: React.CSSProperties
 }
 
+const ITEMS = [
+  {
+    id: '1',
+    name: 'Item 1',
+  },
+  {
+    id: '2',
+    name: 'Item 2',
+  },
+]
+
 export default function AppShell({ children, className, style }: AppShellProps) {
-  const session = useSession({
-    required: false, // change it true if you don't want to show the app shell to unauthenticated users
-  })
-
-  const router = useRouter()
-
   return (
     <div className={cn('flex h-screen', className)} style={style}>
-      <div className="flex w-[280px] flex-col overflow-hidden border-r">
-        <div className="flex items-center gap-3 py-4 pl-5 pr-3">
-          <div className="h-6 w-6 rounded-full bg-primary" />
-          <div>Next Starter</div>
-        </div>
-        <div className="flex-1 space-y-3 overflow-auto p-3">
-          <NavLink href="/" icon={<HomeIcon />} label="Home" />
-          <NavLink href="/team" icon={<UsersIcon />} label="Team" />
-          <NavLink href="/projects" icon={<FolderIcon />} label="Projects" />
-          <NavLink href="/calendar" icon={<CalendarIcon />} label="Calendar" />
-          <NavLink href="/documents" icon={<FilesIcon />} label="Documents" />
-          <NavLink href="/reports" icon={<PieChartIcon />} label="Reports" />
-        </div>
-        <div className="py-3 pl-5 pr-3">
-          <ThemeToggle />
-        </div>
-      </div>
-      <div className="relative flex-1">
-        <div className="sticky top-0 flex items-center gap-3 border-b px-4 py-3">
-          <div className="flex-1" />
-          <div className="flex w-full max-w-screen-sm items-center gap-2 rounded-md p-2 focus-within:ring-1 focus-within:ring-ring">
-            <SearchIcon className="h-5 w-5 text-muted-foreground/50" />
-            <input
-              placeholder="Search for..."
-              className="flex-1 bg-transparent text-sm placeholder:text-muted-foreground/50 focus-visible:outline-none"
-            />
+      <DndContext
+        onDragEnd={(event: DragEndEvent) => {
+          console.log('on drag end event', event)
+        }}
+      >
+        <div className="flex w-[280px] flex-col overflow-hidden border-r">
+          <div className="flex-1 space-x-2 space-y-3 overflow-auto p-3">
+            {ITEMS.map((item) => (
+              <ItemCard key={item.id} id={item.id} name={item.name} />
+            ))}
           </div>
-          <div className="flex-1" />
-          {session.status === 'authenticated' ? (
-            <>
-              <NotificationsMenu />
-              <div className="h-6 border-r" />
-              <AccountMenu />
-            </>
-          ) : session.status === 'unauthenticated' ? (
-            <Button
-              icon={<UserIcon />}
-              onClick={() => {
-                router.push('/api/auth/signin')
-              }}
-            >
-              Login
-            </Button>
-          ) : null}
         </div>
-        {children}
-      </div>
+        <ItemDragOverlay />
+        <div className="relative flex-1">{children}</div>
+      </DndContext>
     </div>
   )
 }
